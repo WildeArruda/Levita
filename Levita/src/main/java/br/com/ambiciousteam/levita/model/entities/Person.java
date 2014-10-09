@@ -13,8 +13,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
+import org.hibernate.annotations.ForeignKey;
 
 /**
  *
@@ -40,6 +42,9 @@ public class Person implements Serializable {
     
     @Column(name = "RG", nullable = false, length = 15)
     private String personRG;
+    
+    @Column(name = "Sexo", unique = true, nullable = false, length = 1)
+    private char personSex;
     
     @Column(name = "Data Nascimento", nullable = false)
     @Temporal(javax.persistence.TemporalType.DATE)
@@ -76,6 +81,11 @@ public class Person implements Serializable {
     private String personBirthUF;
     
     
+    @ManyToOne(optional = true)
+    @ForeignKey(name = "FKPersonAdministrator")
+    private Person person;
+    
+    
     //################################################################# 
     
     public Person() {}
@@ -110,6 +120,14 @@ public class Person implements Serializable {
 
     public void setPersonRG(String personRG) {
         this.personRG = personRG;
+    }
+
+    public char getPersonSex() {
+        return personSex;
+    }
+
+    public void setPersonSex(char personSex) {
+        this.personSex = personSex;
     }
 
     public Date getPersonBirthDate() {
