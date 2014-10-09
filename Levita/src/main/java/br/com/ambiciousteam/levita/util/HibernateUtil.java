@@ -22,10 +22,10 @@ public class HibernateUtil {
     static {
         try {
             System.out.println("Tentando abrir a Session Factory (SF)!");
-            Cofiguration cofiguration = new Configuration().configure();
+            Configuration configuration = new Configuration().configure();
             ServiceRegistry serviceRegistry = new ServiceRegistryBuilder().
-                    applySettings(cofiguration.getProperties()).buildServiceRegistry();
-            sessionFactory = cofiguration.buildSessionFactory(serviceRegistry);
+                    applySettings(configuration.getProperties()).buildServiceRegistry();
+            sessionFactory = configuration.buildSessionFactory(serviceRegistry);
             System.out.println("SF criada com sucesso!");
         } catch (Exception e) {
             System.out.println("Ocorreu um erro"+e);
