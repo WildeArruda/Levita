@@ -13,6 +13,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -83,12 +84,17 @@ public class Person implements Serializable {
     
     @ManyToOne(optional = true)
     @ForeignKey(name = "FKPersonAdministrator")
-    private Person person;
+    @JoinColumn(name = "idAdministrator", referencedColumnName = "idAdministrator")
+    private Administrator administrator;
     
     
     //################################################################# 
     
-    public Person() {}
+    public Person() {
+    
+        this.administrator = new Administrator();
+        
+    }
 
     public Long getID() {
         return ID;
@@ -209,6 +215,16 @@ public class Person implements Serializable {
     public void setPersonBirthUF(String personBirthUF) {
         this.personBirthUF = personBirthUF;
     }
+
+    public Administrator getAdministrator() {
+        return administrator;
+    }
+
+    public void setAdministrator(Administrator administrator) {
+        this.administrator = administrator;
+    }
+    
+    
 
     //##################################################################
     

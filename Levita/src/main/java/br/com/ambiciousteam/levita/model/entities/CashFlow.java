@@ -8,13 +8,17 @@ package br.com.ambiciousteam.levita.model.entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
+import org.hibernate.annotations.ForeignKey;
 
 /**
  *
@@ -52,6 +56,10 @@ public class CashFlow implements Serializable {
     
     @Column(name = "Razão", nullable = false, length = 30)
     private String cfReasonOfMovement;
+    
+    @OneToMany(mappedBy = "cashFlow", fetch = FetchType.LAZY)
+    @ForeignKey(name = "FKAdministratorCashFlow")
+    private List<Administrator> administrators;
     
     //###################################################
     
@@ -112,6 +120,16 @@ public class CashFlow implements Serializable {
     public void setCfReasonOfMovement(String cfReasonOfMovement) {
         this.cfReasonOfMovement = cfReasonOfMovement;
     }
+
+    public List<Administrator> getAdministrators() {
+        return administrators;
+    }
+
+    public void setAdministrators(List<Administrator> administrators) {
+        this.administrators = administrators;
+    }
+    
+    
     
     //######################################################
 

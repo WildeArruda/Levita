@@ -15,10 +15,11 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import org.hibernate.annotations.ForeignKey;
 
 /**
@@ -53,6 +54,11 @@ public class Administrator implements Serializable {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date adminTitleDate;
     
+    @ManyToOne(optional = true)
+    @ForeignKey(name = "FKAdministratorCashFlow")
+    @JoinColumn(name = "idCashFlow", referencedColumnName = "idCashFlow")
+    private CashFlow cashFlow;
+    
     @OneToMany(mappedBy = "administrator", fetch = FetchType.LAZY)
     @ForeignKey(name = "FKPersonAdministrator")
     private List<Person> persons;
@@ -60,7 +66,11 @@ public class Administrator implements Serializable {
     
     //###############################################
 
-    public Administrator() {}
+    public Administrator() {
+    
+        this.cashFlow = new CashFlow();
+        
+    }
     
     
     public Long getID() {
@@ -117,6 +127,14 @@ public class Administrator implements Serializable {
 
     public void setPersons(List<Person> persons) {
         this.persons = persons;
+    }
+
+    public CashFlow getCashFlow() {
+        return cashFlow;
+    }
+
+    public void setCashFlow(CashFlow cashFlow) {
+        this.cashFlow = cashFlow;
     }
 
     
