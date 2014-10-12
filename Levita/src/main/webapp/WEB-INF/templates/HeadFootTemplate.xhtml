@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"> 
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet library="css" name="style.css"/>
+        <h:outputStylesheet library="css" name="font-awesome.min.css"/>
+        <h:outputScript library="js" name="jquery.maskmoney.js" />
+        <h:outputScript library="js" name="jquery.mask.min.js" />
+        <h:outputScript library="js" name="primefacesCalendarLocale.js" />
+        <link rel="icon" type="image/x-icon" href="http://localhost:8080/HotelSys/resources/images/favicon.ico" />
+        <title><ui:insert name="title">Pousada Paraíso da Serra</ui:insert></title>
+    </h:head>
+
+    <h:body>
+        <header>
+            <!--Call the logo image of the system-->
+            <div style="float: left; ">
+                <h:link outcome="/Home">
+                    <h:graphicImage library="images" name="logo200x145.png" styleClass="logo"/>
+                </h:link>
+            </div>
+
+            <div style="margin-top: 40px; font-size: 8px; line-height: 50%; float: left">
+                <h2><h:outputLabel value="#{establishment.Name}" style="margin-left: 20px" /> </h2>
+                <h3><h:outputLabel value="#{establishment.Address}" style="margin-left: 20px" /> </h3>
+                <h3><h:outputLabel value="#{establishment.Mail}" style="margin-left: 20px" /> </h3>
+                <h3><h:outputLabel value="#{establishment.Phone}" style="margin-left: 20px" /> </h3>
+            </div>
+
+            <!--Greeting message to the logged user and 'Exit' button to logout the page-->
+            <div id="logged-user-top-message" >
+                <h:outputLabel value="#{localeBR.welcome} "/>  
+                <h:link title="Editar configurações do usuário" style="color: #ffffff;">
+                    <h:outputLabel value="#{localeBR.user}"/>
+                </h:link>
+                <!--                    <h:link outcome="/Login">
+                                        <p:button id="exitButton" value="Sair" />
+                                        <p:tooltip for="exitButton" value="Clique para sair do sistema."/>
+                                    </h:link>-->
+            </div>
+            <h:graphicImage library="images" name="hotel_sys_transp.png" styleClass="logo_sys_top"/>
+        </header>
+
+        <!--This code calling the menu, coded inside 'MainMenuTemplate.xhtml' file-->
+        <ui:include src="/WEB-INF/templates/MainMenuTemplate.xhtml"/>
+
+        <!--        This code represents the central region, where the content of all other pages will be put
+                your components, images and text.-->
+        <div id="content"> 
+                <ui:insert name="content"/> 
+        </div>
+
+        <footer>
+            <div id="bottom" >
+                <p:outputLabel value="#{localeBR.AppName}" style="float: left;"/>
+                <p:outputLabel value="#{localeBR.TeamSignature}" style="float: right;"/>
+            </div>
+        </footer>
+        <!--            <p:separator style="margin-bottom: 0px;"/>
+                    <div id="clientLogo">Paraíso da Serra</div>
+                    <div id="systemName">HotelSys - Pousada Paraíso da Serra</div>
+                    <div id="copyright">
+                        <a href="http://www.ambiciousteam.com.br" target="_blank">
+                            <p:outputLabel id="credits" value="Ambicious Team"/>
+                        </a>
+                        <p:tooltip for="credits">
+                            <p:graphicImage library="images" name="at-mini.png"/>
+                        </p:tooltip>
+                    </div>-->
+
+        <!--This script changes the mask of money format-->
+        <script>
+            function validateMoney() {
+                $(".money").maskMoney({
+                    decimal: ",",
+                    thousands: ".",
+                    allowZero: true,
+                    symbol: "RS"
+                });
+            }
+
+            $(document).ready(function () {
+                validateMoney();
+            });
+        </script>
+
+        <!--This script changes the mask of phone numbers with 8 and 9 digits-->
+        <script>
+
+            function validatePhone() {
+
+                var masks = ['(00) 00000-0000', '(00) 0000-00009'],
+                        maskBehavior = function (val, e, field, options) {
+                            return val.length > 14 ? masks[0] : masks[1];
+                        };
+
+                $('.phone').mask(maskBehavior, {onKeyPress:
+                            function (val, e, field, options) {
+                                field.mask(maskBehavior(val, e, field, options), options);
+                            }
+                });
+            }
+            $(document).ready(function () {
+                validatePhone();
+            }
+            );
+        </script>
+    </h:body>
+</html>

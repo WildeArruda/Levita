@@ -17,7 +17,7 @@ and open the template in the editor.
     
     <context-param>  
         <param-name>primefaces.THEME</param-name>  
-        <param-value>sam</param-value>  
+        <param-value>start</param-value>  
     </context-param> 
     
     <servlet>
@@ -38,7 +38,7 @@ and open the template in the editor.
     </session-config>
     
     <welcome-file-list>
-        <welcome-file>index.html</welcome-file>
+        <welcome-file>index.xhtml</welcome-file>
     </welcome-file-list>
     
 </web-app>
